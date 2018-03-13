@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!-- ICE服务端参数配置 -->
+    <bean id="iceServerParameter" class="com.zeroc.factory.IceParameter">
+        <property name="iceCfgFilePath" value="zeroc/config.server" />
+        <property name="iceAppName" value="AppIceServer" />
+        <property name="iceAdapterName" value="IceDemoAdapter" />
+        <property name="iceServantMap">
+            <map>
+                <entry key="demo">
+                    <bean class="com.zeroc.provider.DemoProviderI" />
+                </entry>
+                <entry key="print">
+                    <bean class="com.zeroc.provider.PrintProviderI" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!-- ICE服务端启动与销毁管理 -->
+    <bean class="com.zeroc.factory.IceServerFactory" init-method="init" destroy-method="destroy">
+        <property name="iceParameter" ref="iceServerParameter" />
+    </bean>
+</beans>
